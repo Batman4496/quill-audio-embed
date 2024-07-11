@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+  <link rel="stylesheet" href="/dist/style.css">
+  <title>Quill Audio Embed</title>
+</head>
+<body>
+<div id="editor"></div>
+<script type="module">
+  import QuillAudioEmbed from './dist/index.js';
+
+  Quill.register('modules/audioEmbed', QuillAudioEmbed);
+
+  const quill = new Quill('#editor', {
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, false] }],
+        ['bold', 'italic', 'underline'],
+        ['image', 'code-block'],
+      ],
+      audioEmbed: {
+      }
+    },
+    placeholder: 'Compose an epic...',
+    theme: 'snow',
+  });
+
+quill.on('text-change', () => {
+  // console.log(quill);
+  // console.log(quill.getSelection()); 
+  // console.log(quill.getContents())
+});
+</script>
+</body>
+</html>
