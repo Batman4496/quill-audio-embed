@@ -19,14 +19,17 @@ export function audioBlot(options: Options) {
       console.log(value);
       const node = document.createElement(AudioBlot.blotTag);
       node.classList.add(AudioBlot.className);
-      node.innerHTML = '🔊';
+      const split = value.split('.');
+      node.innerHTML =  split[split.length - 2] + '.' + split[split.length - 1] + '🔊';
       node.dataset.url = value;
       setStyles(node, {
         display: 'flex',
         cursor: 'pointer',
-        width: '50px',
         justifyContent: options.alignment ?? 'left',
-        fontSize: '15px'
+        fontSize: '15px',
+        minWidth: '20px',
+        background: 'rgba(204, 204, 204, .2)',
+        paddingInline: '10px'
       });
       
       node.addEventListener('click', (e: any) => AudioBlot.playAudio(e));

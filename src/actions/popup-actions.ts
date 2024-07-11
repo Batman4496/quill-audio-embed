@@ -5,7 +5,7 @@ export function popupSubmit(e: Event, audioEmbed: QuillAudioEmbed, url: string) 
   if (!url.length) return;
 
   const { quill } = audioEmbed;
-  const index = quill.getSelection();
-  quill.insertEmbed(index, 'ql-audio-blot', url);
+  const selection = quill.getSelection();
+  quill.insertEmbed(selection?.index ?? 0, 'ql-audio-blot', url);
   audioEmbed.popupToggle(audioEmbed.popup);
 }
