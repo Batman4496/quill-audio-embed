@@ -36,7 +36,7 @@ export default class QuillAudioEmbed {
       setStyles(popup, { display: 'flex' });
       this.open = true;
     } else {
-      setStyles(popup, { display: 'flex' });
+      setStyles(popup, { display: 'none' });
       this.open = false;
     }
   }
@@ -61,12 +61,14 @@ export default class QuillAudioEmbed {
     setStyles(div, {
       display: 'none',
       position: 'absolute',
-      top: '0px',
-      left: '0px',
+      top: '20px',
+      right: '0px',
+      zIndex: '50',
       justifyContent: 'center',
       alignItems: 'center',
       gap: '2px',
       paddingInline: '10px',
+      paddingBlock: '5px',
       border: '1px solid black',
       background: 'white',
       borderRadius: '10px'
@@ -74,19 +76,29 @@ export default class QuillAudioEmbed {
 
     this.container.appendChild(div);
 
-    const button = document.createElement('button');
-    button.innerHTML = 'Add';
-    button.type = "button";
-    button.onclick = (e) => popupActions.popupSubmit(e, this, this.input.value.trim())
+    const addButton = document.createElement('button');
+    addButton.innerHTML = 'Add';
+    addButton.type = "button";
+    setStyles(addButton, {
+      padding: '0px',
+      border: '.1px solid black',
+      borderRadius: '5px',
+    });
+    addButton.onclick = (e) => popupActions.popupSubmit(e, this, this.input.value.trim())
     
     const closeButton = document.createElement('button');
     closeButton.type = "button";
-    closeButton.innerHTML = '❌';
-    closeButton.onclick = (e) => this.popupToggle(this.popup);
+    closeButton.innerHTML = 'x';
+    setStyles(closeButton, {
+      padding: '0px',
+      border: '.1px solid black',
+      borderRadius: '5px',
+    });
+    closeButton.addEventListener('click', (e) => this.popupToggle(this.popup));
 
     div.append(
       this.input,
-      button,
+      addButton,
       closeButton,
     );
 

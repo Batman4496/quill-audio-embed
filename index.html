@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
-  <link rel="stylesheet" href="/dist/style.css">
   <title>Quill Audio Embed</title>
 </head>
 <body>
 <div id="editor"></div>
+
 <script type="module">
   import QuillAudioEmbed from './dist/index.js';
 
@@ -30,7 +30,7 @@
   });
 
 quill.on('text-change', () => {
-  // console.log(quill);
+  console.log(quill.getSemanticHTML());
   // console.log(quill.getSelection()); 
   // console.log(quill.getContents())
 });
