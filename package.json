@@ -4,9 +4,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc-watch --project . --outDir ./dist --onSuccess \"nodemon ./dist/index.js\" ",
-    "build": "tsc-watch --project . --outDir ./dist && npm run copy",
-    "test": "echo \"Error: no test specified\" && npm run copy && exit 1"
+    "dev": "vite", 
+    "build": "vite build", 
+    "preview": "vite preview"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "tsc-watch": "^6.2.0"
   },
   "devDependencies": {
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3"
   }
 }
