@@ -2,6 +2,9 @@
 
 A Quill module for embedding audio files that you can play!!
 
+![Image](https://github.com/Batman4496/quill-audio-embed/raw/main/assets/a.png)
+
+
 # How to Use
 
 Install the package: `npm install quill-audio-format`
@@ -33,9 +36,6 @@ quill.on('text-change', () => {
 
 ```
 
-
-![Image](https://github.com/Batman4496/quill-audio-embed/raw/main/assets/a.png)
-
-
 # Contribute
 
+Contribution can help a long way ✌️
