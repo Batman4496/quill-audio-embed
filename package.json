@@ -2,7 +2,7 @@
   "name": "quill-audio-embed",
   "description": "Embed and play audio in quill editor.",
   "homepage": "https://github.com/owner/project#readme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": ["quill", "quilljs", "audio", "module", "embed"],
   "type": "module",
   "scripts": {
