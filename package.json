@@ -1,16 +1,17 @@
 {
   "name": "quill-audio-embed",
+  "description": "Embed and play audio in quill editor.",
+  "homepage": "https://github.com/owner/project#readme",
   "version": "1.0.0",
+  "keywords": ["quill", "quilljs", "audio", "module", "embed"],
   "type": "module",
-  "main": "index.js",
   "scripts": {
     "dev": "vite", 
     "build": "vite build", 
     "preview": "vite preview"
   },
-  "author": "",
+  "author": "Batman4496",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "copyfiles": "^2.4.1",
     "tsc-watch": "^6.2.0"
