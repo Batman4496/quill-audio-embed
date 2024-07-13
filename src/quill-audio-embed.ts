@@ -5,29 +5,35 @@ import { audioBlot } from "./audio-blot.js";
 import { setStyles } from "./helpers.js";
 
 export default class QuillAudioEmbed {
+  static Quill: any;
   quill: any;
   options: Options;
   audioButton: HTMLDivElement;
   container: HTMLDivElement;
   popup: HTMLDivElement;
-  input: HTMLInputElement;
+  inputs: AudioInputs;
   open: boolean = false;
 
+  static setQuillConstructor(quillConstructor: any) {
+    QuillAudioEmbed.Quill = quillConstructor;
+  }
 
   constructor(quill: any, options: Options) {
     this.quill = quill;
     this.options = options;
-    this.container = this.createContainer();
 
+    // Create all controls
+    this.container = this.createContainer();
     this.audioButton = this.createAudioButton();
-    
-    this.input = this.createInput();
+    this.inputs = this.createInputs();
     this.popup = this.createPopup();
-    
     this.container.append(this.audioButton, this.popup);
+    
+    
     this.setContainer();
 
-    Quill.register(audioBlot(options));
+    // Register the blot
+    QuillAudioEmbed.Quill.register(audioBlot(options));
   }
 
   // Toggling popup
@@ -41,7 +47,6 @@ export default class QuillAudioEmbed {
     }
   }
 
-  // Toolbar button for audio embed
   createAudioButton() {
     const div = document.createElement('div');
     div.innerHTML = '🔉';
@@ -60,9 +65,11 @@ export default class QuillAudioEmbed {
     div.classList.add('ql-audio__popup');
     setStyles(div, {
       display: 'none',
+      flexDirection: 'column',
       position: 'absolute',
       top: '20px',
-      right: '0px',
+      // left: '50%',
+      // right: '50%',
       zIndex: '50',
       justifyContent: 'center',
       alignItems: 'center',
@@ -76,6 +83,14 @@ export default class QuillAudioEmbed {
 
     this.container.appendChild(div);
 
+    const sub = document.createElement('div');
+    setStyles(sub, {
+      display: 'flex',
+      flexDirection: 'row',
+      gap: '5px',
+      width: '100%'
+    });
+
     const addButton = document.createElement('button');
     addButton.innerHTML = 'Add';
     addButton.type = "button";
@@ -84,7 +99,7 @@ export default class QuillAudioEmbed {
       border: '.1px solid black',
       borderRadius: '5px',
     });
-    addButton.onclick = (e) => popupActions.popupSubmit(e, this, this.input.value.trim())
+    addButton.onclick = (e) => popupActions.popupSubmit(e, this);
     
     const closeButton = document.createElement('button');
     closeButton.type = "button";
@@ -94,33 +109,65 @@ export default class QuillAudioEmbed {
       border: '.1px solid black',
       borderRadius: '5px',
     });
-    closeButton.addEventListener('click', (e) => this.popupToggle(this.popup));
+    closeButton.addEventListener('click', (e) => this.popupToggle(this.popup)); 
 
+    sub.append(this.inputs.alignment, addButton, closeButton);
+    
     div.append(
-      this.input,
-      addButton,
-      closeButton,
+      this.inputs.label, 
+      this.inputs.url, 
+      sub
     );
-
+    
     return div;
   }
 
-  createInput() {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = "Enter audio url";
-    input.classList.add('ql-audio__input'); 
-    setStyles(input, {
+  createInputs() {
+    const labelInput = document.createElement('input');
+    labelInput.type = 'text';
+    labelInput.placeholder = "Enter text";
+    labelInput.id = 'ql-audio__input-name';
+    labelInput.classList.add('ql-audio__input'); 
+    setStyles(labelInput, {
+      border: '1px solid black',
+      paddingInline: '5px',
+      borderRadius: '5px' 
+    });
+    
+    const valueInput = document.createElement('input');
+    valueInput.type = 'text';
+    valueInput.id = 'ql-audio__input-value';
+    valueInput.placeholder = "Enter audio url";
+    valueInput.classList.add('ql-audio__input'); 
+    setStyles(valueInput, {
+      border: '1px solid black',
+      paddingInline: '5px',
+      borderRadius: '5px' 
+    });
+    
+    
+    const select = document.createElement('select');
+    select.id = 'ql-audio__input-alignment';
+
+    ['left', 'right', 'center'].forEach(al => {
+      const option = document.createElement('option');
+      option.value = al;
+      option.innerText = al;
+
+      select.append(option);
+    })
+
+    setStyles(valueInput, {
+      border: '1px solid black',
+      paddingInline: '5px',
       borderRadius: '5px' 
     });
 
-    input.addEventListener('keypress', (e) => {
-      if (e.code === "Enter") {
-        popupActions.popupSubmit(e, this, this.input.value.trim());
-      }
-    });
-
-    return input;
+    return {
+      label: labelInput,
+      url: valueInput,
+      alignment: select
+    };
   }
 
   setContainer() {

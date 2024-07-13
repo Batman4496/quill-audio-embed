@@ -14,15 +14,19 @@ Install the package: `npm install quill-audio-format`
 
 You can import the script tag from the `node_modules/quill-audio-embed/dist/quill-audio-embed.umd.cjs`
 
-```js
+```html
 <head>
   ...
     <script type="text/javascript" src="/dist/quill-audio-embed.umd.cjs"></script>
   ...
 </head>
 
-...
+
 <script>
+  // Pass in the Quill constructor
+  QuillAudioEmbed.setQuillConstructor(Quill);
+
+  // Register the module
   Quill.register('modules/audioEmbed', QuillAudioEmbed);
 
   const quill = new Quill('#editor', {
@@ -53,8 +57,9 @@ You can also import it as a module
 
 ```js
 import Quill from "quill";
-import QuilAudioEmbed from "quill-audio-embed";
+import QuilAudioEmbed, { setQuillConstructor } from "quill-audio-embed";
 
+setQuillConstructor(Quill);
 Quill.register('modules/audioEmbed', QuillAudioEmbed);
   const quill = new Quill('#editor', {
     modules: {
@@ -72,6 +77,28 @@ Quill.register('modules/audioEmbed', QuillAudioEmbed);
 });
 ```
 
+## ReactQuill
+
+```js
+import React from 'react';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import QuillAudioEmbed from "quill-audio-embed";
+
+QuillAudioEmbed.setQuillConstructor(Quill);
+Quill.register('modules/audioEmbed', QuillAudioEmbed);
+
+function QuillEditor() {
+
+  return (<ReactQuill theme="snow" modules={{
+    audioEmbed: {
+      alignment: 'left' // Setting default alignment
+    }
+  }}/>);
+}
+
+export default QuillEditor;
+```
 
 # Contribute
 

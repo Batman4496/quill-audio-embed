@@ -1,31 +1,40 @@
 /// <reference path="index.d.ts" />
 
+import QuillAudioEmbed from "./quill-audio-embed.js";
 import { setStyles } from "./helpers.js";
 
 export function audioBlot(options: Options) {
-  const BlotType = Quill.import('blots/block');
+  const BlotType = QuillAudioEmbed.Quill.import('blots/embed');
 
   class AudioBlot extends BlotType {
     static blotName = 'ql-audio-blot';
-    static blotTag = 'div';
+    static tagName = 'div';
     static className = 'ql-audio__audio-blot';
+    static audio: HTMLAudioElement; 
 
     static playAudio(e: any) {
+      if (AudioBlot.audio) {
+        AudioBlot.audio.pause();
+      }
       const audio = new Audio(e.target.dataset.url);
-      audio.play();
+      AudioBlot.audio = audio;
+      
+      AudioBlot.audio.play();
     }
 
-    static create(value: any) {
-      console.log(value);
-      const node = document.createElement(AudioBlot.blotTag);
+    static create(data: AudioBlotValue) {
+      const node = super.create();
       node.classList.add(AudioBlot.className);
-      const split = value.split('.');
-      node.innerHTML =  split[split.length - 2] + '.' + split[split.length - 1] + '🔊';
-      node.dataset.url = value;
+
+      const split = data.url.split('.');
+      node.innerHTML = data.label ?? split[split.length - 2] + '.' + split[split.length - 1] + '🔊';
+      node.dataset.url = data.url;
+      node.dataset.label = data.label;
+      node.dataset.alignment = data.alignment;
       setStyles(node, {
         display: 'flex',
         cursor: 'pointer',
-        justifyContent: options.alignment ?? 'left',
+        justifyContent: data.alignment ?? options.alignment ?? 'left',
         fontSize: '15px',
         minWidth: '20px',
         background: 'rgba(204, 204, 204, .2)',
@@ -37,19 +46,23 @@ export function audioBlot(options: Options) {
       return node;
     }
 
-
     format(format: any, value: any) {
-      console.log(this.domNode.style);
-      console.log(format, value);
       if (format === 'header' && value !== false) {
         this.domNode.style.fontSize = '30px';
       } else if (format === 'header' && value === false) {
-        console.log('waaa');
         this.domNode.style.fontSize = '15px';
       }
     }
 
+    static value(domNode: any) {
+      return {
+        url: domNode.dataset.url,
+        label: domNode.dataset.label,
+        alignment: domNode.dataset.alignment
+      };
+    }
   }
+
 
   return AudioBlot;
 }
