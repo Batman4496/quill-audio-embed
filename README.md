@@ -17,17 +17,17 @@ You can import the script tag from the `node_modules/quill-audio-embed/dist/quil
 ```html
 <head>
   ...
-    <script type="text/javascript" src="/dist/quill-audio-embed.umd.cjs"></script>
+    <script type="text/javascript" src="/dist/umd/index.umd.cjs"></script>
   ...
 </head>
 
 
 <script>
   // Pass in the Quill constructor
-  QuillAudioEmbed.setQuillConstructor(Quill);
+  QuillAudioEmbed.default.setQuillConstructor(Quill);
 
   // Register the module
-  Quill.register('modules/audioEmbed', QuillAudioEmbed);
+  Quill.register('modules/audioEmbed', QuillAudioEmbed.default);
 
   const quill = new Quill('#editor', {
     modules: {
@@ -101,6 +101,11 @@ function QuillEditor() {
 
 export default QuillEditor;
 ```
+
+## CommonJs
+
+The common js library is located inside `quill-audio-embed/dist/lib`.
+
 
 # File Uploading
 

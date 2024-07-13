@@ -7,7 +7,6 @@ export default defineConfig({
     lib: {
       fileName: 'quill-audio-embed',
       entry: 'src/index.ts',
-      name: 'QuillAudioEmbed',
     },
     rollupOptions: {
       input: ['src/index.ts'],
