@@ -26,10 +26,9 @@ export function audioBlot(options: Options) {
       const node = super.create();
       node.classList.add(AudioBlot.className);
 
-      const split = data.url.split('.');
-      node.innerHTML = data.label ?? split[split.length - 2] + '.' + split[split.length - 1] + '🔊';
+      node.innerHTML = data.label || '🔊';
       node.dataset.url = data.url;
-      node.dataset.label = data.label;
+      node.dataset.label = data.label || '🔊';
       node.dataset.alignment = data.alignment;
       setStyles(node, {
         display: 'flex',
@@ -46,15 +45,7 @@ export function audioBlot(options: Options) {
       return node;
     }
 
-    format(format: any, value: any) {
-      if (format === 'header' && value !== false) {
-        this.domNode.style.fontSize = '30px';
-      } else if (format === 'header' && value === false) {
-        this.domNode.style.fontSize = '15px';
-      }
-    }
-
-    static value(domNode: any) {
+    static value(domNode: any): AudioBlotValue {
       return {
         url: domNode.dataset.url,
         label: domNode.dataset.label,

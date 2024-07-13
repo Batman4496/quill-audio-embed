@@ -23,7 +23,34 @@
         ['image', 'code-block'],
       ],
       audioEmbed: {
-        alignment: 'left' // Alignment of the play button
+        validate: (inputs, audioEmbed) => {
+          // Check if file is larger than 5 mb
+          const file = inputs.file.files[0];
+
+          if ((file / (1024 * 1024)) > 5) {
+            return false;
+          }
+
+          if (!file.type.split('/').includes('image')) {
+            return false;
+          }
+
+          return true;
+        },
+        onUpload: async (inputs, audioEmbed) => {
+
+          // Random request to some api
+          const res = await fetch('https://api.api-ninjas.com/v1/randomimage?category=nature', {
+            method: 'GET'
+          });
+          const json = await res.json();
+          
+          return {
+            label: 'snare.wav',
+            url: 'assets/snare.wav'
+          }
+        },
+        alignment: 'left' // Default alignment of the play button
       }
     },
     placeholder: 'Compose an epic...',
