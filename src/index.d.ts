@@ -1,13 +1,26 @@
+
+interface IQuillAudioEmbed  {
+  quill: any;
+  options: Options;
+  audioButton: HTMLDivElement;
+  container: HTMLDivElement;
+  popup: HTMLDivElement;
+  inputs: AudioInputs;
+  open: boolean = false;
+}
+
 type Options = {
-  // autoPlay?: boolean,
+  onLoad?: (audioEmbed: IQuillAudioEmbed) => any,
+  validate?: (inputs: AudioInputs, audioEmbed: IQuillAudioEmbed) => Promise<boolean>,
+  onUpload?: (inputs: AudioInputs, audioEmbed: IQuillAudioEmbed) => Promise<AudioBlotValue|false>,
   alignment?: 'center' | 'left' | 'right'
 };
-
 
 type AudioInputs = {
   label: HTMLInputElement, 
   url: HTMLInputElement,
-  alignment: HTMLSelectElement
+  alignment: HTMLSelectElement,
+  file: HTMLInputElement
 }
 
 type AudioBlotValue = { url: string, label?: string, alignment?: string };

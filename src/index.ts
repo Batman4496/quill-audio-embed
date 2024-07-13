@@ -1,1 +1,1 @@
-export { default } from "./quill-audio-embed.js";
+export { default } from "./quill-audio-embed";

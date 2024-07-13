@@ -1,10 +1,10 @@
 /// <reference path="index.d.ts" />
 
-import * as popupActions from "./actions/popup-actions.js";
-import { audioBlot } from "./audio-blot.js";
-import { setStyles } from "./helpers.js";
+import * as popupActions from "./actions/popup-actions";
+import { audioBlot } from "./audio-blot";
+import { setStyles } from "./helpers";
 
-export default class QuillAudioEmbed {
+export default class QuillAudioEmbed implements IQuillAudioEmbed {
   static Quill: any;
   quill: any;
   options: Options;
@@ -27,13 +27,18 @@ export default class QuillAudioEmbed {
     this.audioButton = this.createAudioButton();
     this.inputs = this.createInputs();
     this.popup = this.createPopup();
+
+    // Add controls to container
     this.container.append(this.audioButton, this.popup);
-    
-    
+  
+    // Render the container
     this.setContainer();
 
     // Register the blot
     QuillAudioEmbed.Quill.register(audioBlot(options));
+
+    // Fire load event
+    if (options.onLoad) options.onLoad(this);
   }
 
   // Toggling popup
@@ -51,7 +56,6 @@ export default class QuillAudioEmbed {
     const div = document.createElement('div');
     div.innerHTML = '🔉';
     setStyles(div, {
-      padding: '1px',
       cursor: 'pointer'
     });
 
@@ -95,9 +99,11 @@ export default class QuillAudioEmbed {
     addButton.innerHTML = 'Add';
     addButton.type = "button";
     setStyles(addButton, {
-      padding: '0px',
+      width: '100%',
+      paddingInline: '15px',
       border: '.1px solid black',
       borderRadius: '5px',
+      backgroundColor: '#a7f3d0'
     });
     addButton.onclick = (e) => popupActions.popupSubmit(e, this);
     
@@ -105,9 +111,11 @@ export default class QuillAudioEmbed {
     closeButton.type = "button";
     closeButton.innerHTML = 'x';
     setStyles(closeButton, {
-      padding: '0px',
+      width: '100%',
+      paddingInline: '15px',
       border: '.1px solid black',
       borderRadius: '5px',
+      backgroundColor: '#fecaca'
     });
     closeButton.addEventListener('click', (e) => this.popupToggle(this.popup)); 
 
@@ -116,13 +124,28 @@ export default class QuillAudioEmbed {
     div.append(
       this.inputs.label, 
       this.inputs.url, 
+      this.inputs.file, 
       sub
     );
     
     return div;
   }
 
-  createInputs() {
+  createFileInput() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.classList.add('ql-audio__input-file');
+    setStyles(fileInput, {
+      width: '100%',
+      border: '1px solid black',
+    });
+
+    fileInput.addEventListener('change', (e: Event) => popupActions.fileChange(e, this));
+
+    return fileInput;
+  }
+
+  createInputs(): AudioInputs {
     const labelInput = document.createElement('input');
     labelInput.type = 'text';
     labelInput.placeholder = "Enter text";
@@ -166,7 +189,8 @@ export default class QuillAudioEmbed {
     return {
       label: labelInput,
       url: valueInput,
-      alignment: select
+      alignment: select,
+      file: this.createFileInput()
     };
   }
 
