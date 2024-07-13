@@ -1,5 +1,4 @@
-src
 assets
-tsconfig.json
 vite.config.json
 index.html
+*.tgz

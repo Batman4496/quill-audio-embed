@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import dtsPlugin from 'vite-plugin-dts';
 
 export default defineConfig({ 
   build: {
@@ -7,8 +8,34 @@ export default defineConfig({
       fileName: 'quill-audio-embed',
       entry: 'src/index.ts',
       name: 'QuillAudioEmbed',
-      formats: ['es', 'umd']
     },
+    rollupOptions: {
+      input: ['src/index.ts'],
+      output: [
+        {
+          format: "cjs",
+          entryFileNames: "[name].cjs",
+          preserveModules: true,
+          exports: "named",
+          dir: "dist/lib"
+        },
+        {
+          format: 'umd',
+          entryFileNames: '[name].umd.cjs',
+          exports: "named",
+          dir: "dist/umd",
+          name: "QuillAudioEmbed"
+        }
+      ]
+      
+    }
   },
-  server: true
+  plugins: [
+    dtsPlugin({
+      insertTypesEntry: true,
+      entryRoot: "./src",
+      outDir: ['dist/types'],
+      tsconfigPath: "./tsconfig.json"
+    })
+  ]
 });

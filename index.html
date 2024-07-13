@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
-  <script type="text/javascript" src="/dist/quill-audio-embed.umd.cjs"></script>  
+  <script type="text/javascript" src="/dist/umd/index.umd.cjs"></script>  
   <title>Quill Audio Embed</title>
 </head>
 <body>
 <div id="editor"></div>
 
 <script>
-  QuillAudioEmbed.setQuillConstructor(Quill);
-  Quill.register('modules/audioEmbed', QuillAudioEmbed);
+  QuillAudioEmbed.default.setQuillConstructor(Quill);
+  Quill.register('modules/audioEmbed', QuillAudioEmbed.default);
 
   const quill = new Quill('#editor', {
     modules: {

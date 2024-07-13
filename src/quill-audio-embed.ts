@@ -1,4 +1,4 @@
-/// <reference path="index.d.ts" />
+/// <reference path="./types/index.d.ts" />
 
 import * as popupActions from "./actions/popup-actions";
 import { audioBlot } from "./audio-blot";

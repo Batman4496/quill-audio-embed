@@ -1,4 +1,4 @@
-/// <reference path="index.d.ts" />
+/// <reference path="./types/index.d.ts" />
 
 import QuillAudioEmbed from "./quill-audio-embed.js";
 import { setStyles } from "./helpers.js";
