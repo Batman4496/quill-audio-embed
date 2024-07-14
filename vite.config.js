@@ -28,13 +28,5 @@ export default defineConfig({
       ]
       
     }
-  },
-  plugins: [
-    dtsPlugin({
-      insertTypesEntry: true,
-      entryRoot: "./src",
-      outDir: ['dist/types'],
-      tsconfigPath: "./tsconfig.json"
-    })
-  ]
+  }
 });

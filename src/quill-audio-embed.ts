@@ -1,5 +1,4 @@
-/// <reference path="./types/index.d.ts" />
-
+import { IQuillAudioEmbed, Options, AudioInputs } from "./types/types";
 import * as popupActions from "./actions/popup-actions";
 import { audioBlot } from "./audio-blot";
 import { setStyles } from "./helpers";
@@ -53,7 +52,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
   }
 
   createAudioButton() {
-    const div = document.createElement('div');
+    const div = document?.createElement('div');
     div.innerHTML = '🔉';
     setStyles(div, {
       cursor: 'pointer'
@@ -65,7 +64,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
   }
 
   createPopup() {
-    const div = document.createElement('div');
+    const div = document?.createElement('div');
     div.classList.add('ql-audio__popup');
     setStyles(div, {
       display: 'none',
@@ -87,7 +86,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
 
     this.container.appendChild(div);
 
-    const sub = document.createElement('div');
+    const sub = document?.createElement('div');
     setStyles(sub, {
       display: 'flex',
       flexDirection: 'row',
@@ -95,7 +94,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
       width: '100%'
     });
 
-    const addButton = document.createElement('button');
+    const addButton = document?.createElement('button');
     addButton.innerHTML = 'Add';
     addButton.type = "button";
     setStyles(addButton, {
@@ -107,7 +106,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
     });
     addButton.onclick = (e) => popupActions.popupSubmit(e, this);
     
-    const closeButton = document.createElement('button');
+    const closeButton = document?.createElement('button');
     closeButton.type = "button";
     closeButton.innerHTML = 'x';
     setStyles(closeButton, {
@@ -132,7 +131,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
   }
 
   createFileInput() {
-    const fileInput = document.createElement('input');
+    const fileInput = document?.createElement('input');
     fileInput.type = 'file';
     fileInput.classList.add('ql-audio__input-file');
     setStyles(fileInput, {
@@ -146,7 +145,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
   }
 
   createInputs(): AudioInputs {
-    const labelInput = document.createElement('input');
+    const labelInput = document?.createElement('input');
     labelInput.type = 'text';
     labelInput.placeholder = "Enter text";
     labelInput.id = 'ql-audio__input-name';
@@ -157,7 +156,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
       borderRadius: '5px' 
     });
     
-    const valueInput = document.createElement('input');
+    const valueInput = document?.createElement('input');
     valueInput.type = 'text';
     valueInput.id = 'ql-audio__input-value';
     valueInput.placeholder = "Enter audio url";
@@ -169,11 +168,11 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
     });
     
     
-    const select = document.createElement('select');
+    const select = document?.createElement('select');
     select.id = 'ql-audio__input-alignment';
 
     ['left', 'right', 'center'].forEach(al => {
-      const option = document.createElement('option');
+      const option = document?.createElement('option');
       option.value = al;
       option.innerText = al;
 
@@ -195,8 +194,8 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
   }
 
   setContainer() {
-    const toolbar = document.querySelector(".ql-toolbar");
-    const span = document.createElement('span');
+    const toolbar = document?.querySelector(".ql-toolbar");
+    const span = document?.createElement('span');
     span.classList.add('ql-formats');
     toolbar?.appendChild(span);
 
@@ -204,7 +203,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
   }
 
   createContainer () {
-    const div = document.createElement('div');
+    const div = document?.createElement('div');
     div.classList.add('ql-audio__container');
     div.style.position = 'relative';
 

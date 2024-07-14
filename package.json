@@ -3,12 +3,11 @@
   "description": "Embed and play audio in quill editor.",
   "homepage": "https://github.com/Batman4496/quill-audio-embed",
   "main": "./dist/index.js",
-  "types": "./dist/types/index.d.ts",
   "files": [
     "dist",
     "types"
   ],
-  "version": "2.0.6",
+  "version": "2.0.8",
   "keywords": [
     "quill",
     "quilljs",
