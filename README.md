@@ -7,7 +7,7 @@ A Quill module for embedding audio files that you can play!!
 
 # How to Use
 
-Install the package: `npm install quill-audio-format`
+Install the package: `npm install quill-audio-embed`
 
 
 ## Script
