@@ -34,7 +34,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
     this.setContainer();
 
     // Register the blot
-    QuillAudioEmbed.Quill.register(audioBlot(options));
+    QuillAudioEmbed.Quill.register(audioBlot(this, options));
 
     // Fire load event
     if (options.onLoad) options.onLoad(this);
@@ -156,16 +156,23 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
       borderRadius: '5px' 
     });
     
-    const valueInput = document?.createElement('input');
-    valueInput.type = 'text';
-    valueInput.id = 'ql-audio__input-value';
-    valueInput.placeholder = "Enter audio url";
-    valueInput.classList.add('ql-audio__input'); 
-    setStyles(valueInput, {
+    const urlInput = document?.createElement('input');
+    urlInput.type = 'text';
+    urlInput.id = 'ql-audio__input-value';
+    urlInput.placeholder = "Enter audio url";
+    urlInput.classList.add('ql-audio__input'); 
+    setStyles(urlInput, {
       border: '1px solid black',
       paddingInline: '5px',
       borderRadius: '5px' 
     });
+
+    urlInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        popupActions.popupSubmit(e, this);
+      }
+    })
     
     
     const select = document?.createElement('select');
@@ -179,7 +186,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
       select.append(option);
     })
 
-    setStyles(valueInput, {
+    setStyles(urlInput, {
       border: '1px solid black',
       paddingInline: '5px',
       borderRadius: '5px' 
@@ -187,7 +194,7 @@ export default class QuillAudioEmbed implements IQuillAudioEmbed {
 
     return {
       label: labelInput,
-      url: valueInput,
+      url: urlInput,
       alignment: select,
       file: this.createFileInput()
     };

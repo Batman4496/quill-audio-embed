@@ -13,6 +13,7 @@ export type Options = {
   onLoad?: (audioEmbed: IQuillAudioEmbed) => any,
   validate?: (inputs: AudioInputs, audioEmbed: IQuillAudioEmbed) => Promise<boolean>,
   onUpload?: (inputs: AudioInputs, audioEmbed: IQuillAudioEmbed) => Promise<AudioBlotValue|false>,
+  onDelete?: (data: AudioBlotValue, audioEmbed: IQuillAudioEmbed) => Promise<boolean>,
   alignment?: 'center' | 'left' | 'right'
 };
 
@@ -23,4 +24,4 @@ export type AudioInputs = {
   file: HTMLInputElement
 }
 
-export type AudioBlotValue = { url: string, label?: string, alignment?: string };
+export type AudioBlotValue = { id?: string, url: string, label?: string, alignment?: string };

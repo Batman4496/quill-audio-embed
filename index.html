@@ -50,6 +50,18 @@
             url: 'assets/snare.wav'
           }
         },
+        onDelete: async (data, audioEmbed) => {
+          const res = await fetch('https://api.api-ninjas.com/v1/randomimage?category=nature', {
+            method: 'GET'
+          });
+          const json = await res.json();
+
+          if (json.success) {
+            return true;
+          }
+
+          return false;
+        },
         alignment: 'left' // Default alignment of the play button
       }
     },

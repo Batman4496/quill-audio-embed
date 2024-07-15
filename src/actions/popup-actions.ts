@@ -1,4 +1,4 @@
-import { AudioBlotValue } from "../types/types";
+import { AudioBlotValue, IQuillAudioEmbed } from "../types/types";
 import { setStyles } from "../helpers";
 import QuillAudioEmbed from "../quill-audio-embed";
 

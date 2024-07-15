@@ -1,6 +1,6 @@
 # Introduction 
 
-A Quill module for embedding audio files that you can play!!
+A Quill module for embedding audio files that you can play! You can also validate and upload files!
 
 ![Image](https://github.com/Batman4496/quill-audio-embed/raw/main/assets/a.png)
 
@@ -126,13 +126,13 @@ const quill = new Quill('#editor', {
           const file = inputs.file.files[0];
 
           if ((file / (1024 * 1024)) > 5) {
-            // Write your own error message displaying logiv
+            // Write your own error message displaying logic
             document.querySelector('#upload-error').innerHTML = "An error occured!";
             return false;
           }
 
           if (!file.type.split('/').includes('image')) {
-            // Write your own error message displaying logiv
+            // Write your own error message displaying logic
             document.querySelector('#upload-error').innerHTML = "An error occured!";
             return false;
           }
@@ -170,7 +170,7 @@ const quill = new Quill('#editor', {
         });
         const json = await res.json();
 
-        if (!json.sucesss) return false'
+        if (!json.sucesss) return false;
         
         return {
           label: json.data.name,
@@ -185,6 +185,48 @@ const quill = new Quill('#editor', {
   theme: 'snow',
 });
 ```
+
+`onDelete`: Executed when you try to delete an audio embed. You can add your own deletion logic for uploaded files. Return `true` in case of success and the quill-audio-embed will automatically remove the embed from the editor. Return `false` in case of failure and embed will not be removed.
+
+```js
+
+
+const quill = new Quill('#editor', {
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, false] }],
+        ['bold', 'italic', 'underline'],
+        ['image', 'code-block'],
+      ],
+      audioEmbed: {
+        onUpload: async (inputs, audioEmbed) => {
+          // File uploading
+        },
+        onDelete: async (data, audioEmbed) => {
+
+          // Doing a delete request to external api
+          const res = await fetch(`https://www.example.com/api/file?id=${data.id}`, {
+            method: 'DELETE',
+          });
+
+          const json = await res.json();
+
+          if (json.success) {
+            // File successfully deleted
+            return true;
+          }
+
+          // Failed to delete the file
+          return false;
+        },
+        alignment: 'left' // Default alignment of the play button
+      }
+    },
+    placeholder: 'Compose an epic...',
+    theme: 'snow',
+  });
+```
+
 
 
 ## Types
@@ -205,6 +247,7 @@ type Options = {
   onLoad?: (audioEmbed: IQuillAudioEmbed) => any,
   validate?: (inputs: AudioInputs, audioEmbed: IQuillAudioEmbed) => Promise<boolean>,
   onUpload?: (inputs: AudioInputs, audioEmbed: IQuillAudioEmbed) => Promise<AudioBlotValue|false>,
+  onDelete?: (data: AudioBlotValue, audioEmbed: IQuillAudioEmbed) => Promise<boolean>,
   alignment?: 'center' | 'left' | 'right'
 };
 
@@ -215,7 +258,7 @@ type AudioInputs = {
   file: HTMLInputElement
 }
 
-type AudioBlotValue = { url: string, label?: string, alignment?: string };
+type AudioBlotValue = { id?: string, url: string, label?: string, alignment?: string };
 
 ```
 
