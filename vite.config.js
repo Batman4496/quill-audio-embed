@@ -24,9 +24,29 @@ export default defineConfig({
           exports: "named",
           dir: "dist/umd",
           name: "QuillAudioEmbed"
+        },
+        {
+          format: 'esm',
+          entryFileNames: '[name].js',
+          preserveModules: true,
+          exports: "named",
+          dir: "dist",
         }
       ]
       
     }
-  }
+    
+  },
+  server: {
+    warmup: {
+      clientFiles: ['./src/**.*'],
+    }
+  },
+  plugins: [
+    dtsPlugin({
+      entryRoot: "./src",
+      outDir: ['./dist', './dist/lib'],
+      tsconfigPath: './tsconfig.json'
+    })
+  ]
 });

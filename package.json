@@ -18,7 +18,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
+    "watch": "vite build --watch",
     "preview": "vite preview"
   },
   "author": "Batman4496",
